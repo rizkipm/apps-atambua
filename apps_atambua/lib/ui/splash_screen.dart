@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'page_login.dart';
 
 class PageSplashScreen extends StatefulWidget {
   @override
@@ -14,18 +15,26 @@ class _PageSplashScreenState extends State<PageSplashScreen> {
 
   onDoneLoading()async{
     //setelah splash akan pindah ke page selanjutnya
+    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>PageLogin()));
   }
 
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    loadData();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage('assets/exodus.gif'),
-          fit: BoxFit.cover
-        )
-      ),
+      child: Image.asset('assets/dance.gif'),
+//      decoration: BoxDecoration(
+//        image: DecorationImage(
+//          image: AssetImage('assets/exodus.gif'),
+//          fit: BoxFit.cover
+//        )
+//      ),
     );
   }
 }

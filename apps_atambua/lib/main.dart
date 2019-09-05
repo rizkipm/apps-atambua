@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'ui/splash_screen.dart';
-void main() => runApp(MyApp());
+import 'ui/page_login.dart';
+void main() => runApp(MaterialApp(debugShowCheckedModeBanner: false,home: PageSplashScreen()),);
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
@@ -20,7 +21,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: PageSplashScreen(),debugShowCheckedModeBanner: false,
+      home: PageLogin(),debugShowCheckedModeBanner: false,
     );
   }
 }
