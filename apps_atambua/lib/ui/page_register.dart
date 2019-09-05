@@ -49,12 +49,11 @@ class _PageRegisterState extends State<PageRegister> {
       setState(() {
         Navigator.pop(context);
       });
+    }else if(value == 2){
+      print(pesan);
     }else{
       print(pesan);
     }
-
-
-
   }
 
   @override
@@ -230,8 +229,20 @@ class _PageRegisterState extends State<PageRegister> {
               child: MaterialButton(
                 color: Colors.blueGrey,
                 textColor: Colors.white,
-                child: Text('Login'),
-                onPressed: (){},
+                child: Text('Submit Register'),
+                onPressed: (){
+                  setState(() {
+                    nFullname = etFullname.text;
+                    nAlamat = etAlamat.text;
+                    nUsername = etUsername.text;
+                    nEmail = etEmail.text;
+                    nNohp = etNohp.text;
+                    nPassword = etPassword.text;
+
+                    //panggil method submit data register
+                    submitDataRegister();
+                  });
+                },
               ),
             ),
 
@@ -240,7 +251,9 @@ class _PageRegisterState extends State<PageRegister> {
               child: MaterialButton(
                 textColor: Colors.blueGrey,
                 child: Text('Sudah Punya Akun ? Silahkan Login'),
-                onPressed: (){},
+                onPressed: (){
+
+                },
               ),
             ),
           ],
