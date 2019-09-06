@@ -32,6 +32,14 @@ class _PageRegisterState extends State<PageRegister> {
   //tambahkan key form
   final _keyForm = GlobalKey<FormState>();
 
+  check() {
+    final form = _keyForm.currentState;
+    if (form.validate()) {
+      form.save();
+      //print("$username, $password");
+      submitDataRegister();
+    }
+  }
   submitDataRegister() async{
     final responseData = await http.post("http://172.20.10.6/apps_atambua/register.php",
       body: {"fullname" : nFullname, "username": nUsername, "email": nEmail, "password": nPassword,
@@ -83,6 +91,7 @@ class _PageRegisterState extends State<PageRegister> {
                   }
                   return null;
                 },
+                onSaved: (value)=> nUsername = value ,
                 controller: etUsername,
                 decoration: InputDecoration(
                     hintText: 'Username',
@@ -102,6 +111,7 @@ class _PageRegisterState extends State<PageRegister> {
                   }
                   return null;
                 },
+                onSaved: (value)=> nFullname = value ,
                 controller: etFullname,
                 decoration: InputDecoration(
                     hintText: 'Full Name',
@@ -121,6 +131,7 @@ class _PageRegisterState extends State<PageRegister> {
                   }
                   return null;
                 },
+                onSaved: (value)=> nEmail = value ,
                 controller: etEmail,
                 decoration: InputDecoration(
                     hintText: 'Email',
@@ -140,6 +151,7 @@ class _PageRegisterState extends State<PageRegister> {
                   }
                   return null;
                 },
+                onSaved: (value)=> nNohp = value ,
                 controller: etNohp,
                 decoration: InputDecoration(
                     hintText: 'No Hp',
@@ -159,6 +171,7 @@ class _PageRegisterState extends State<PageRegister> {
                   }
                   return null;
                 },
+                onSaved: (value)=> nPassword = value ,
                 controller: etPassword,
                 obscureText: true,
                 decoration: InputDecoration(
@@ -183,6 +196,7 @@ class _PageRegisterState extends State<PageRegister> {
                   _pilihSex(value);
                 },
                 activeColor: Colors.blueGrey,
+                selected: true,
                 subtitle: Text(
                   'Pilih ini jika anda laki - laki'
                 ),
@@ -212,6 +226,7 @@ class _PageRegisterState extends State<PageRegister> {
                   }
                   return null;
                 },
+                onSaved: (value)=> nAlamat = value ,
                 controller: etAlamat,
                 maxLines: 3,
                 decoration: InputDecoration(
@@ -232,15 +247,16 @@ class _PageRegisterState extends State<PageRegister> {
                 child: Text('Submit Register'),
                 onPressed: (){
                   setState(() {
-                    nFullname = etFullname.text;
-                    nAlamat = etAlamat.text;
-                    nUsername = etUsername.text;
-                    nEmail = etEmail.text;
-                    nNohp = etNohp.text;
-                    nPassword = etPassword.text;
-
-                    //panggil method submit data register
-                    submitDataRegister();
+                    check();
+//                    nFullname = etFullname.text;
+//                    nAlamat = etAlamat.text;
+//                    nUsername = etUsername.text;
+//                    nEmail = etEmail.text;
+//                    nNohp = etNohp.text;
+//                    nPassword = etPassword.text;
+//
+//                    //panggil method submit data register
+//                    submitDataRegister();
                   });
                 },
               ),
