@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'page_register.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class PageLogin extends StatefulWidget {
   @override
@@ -26,18 +28,42 @@ class _PageLoginState extends State<PageLogin> {
     if (form.validate()) {
       form.save();
       //print("$username, $password");
-//      submitDataRegister();
+      submitLogin();
     }
   }
 
   String nUsername, nPassword;
+
+  submitLogin() async{
+    final responseData = await http.post("http://172.20.10.6/apps_atambua/login.php",
+        body: {"username": nUsername, "password": nPassword,
+        }
+    );
+
+    final data = jsonDecode(responseData.body);
+    int value = data['value'];
+    String pesan = data['message'];
+    print(data);
+
+    //cek value 1 atau 0
+    if(value == 1){
+      setState(() {
+        //berhasil login
+        Navigator.pop(context);
+      });
+    }else if(value == 2){
+      print(pesan);
+    }else{
+      print(pesan);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Form(
         key: _keyForm,
-        child: Column(
+        child: ListView(
           children: <Widget>[
             Text('Login Form', style: TextStyle(fontSize: 25.0, fontWeight: FontWeight.bold,
               color: Colors.blueGrey
@@ -96,7 +122,9 @@ class _PageLoginState extends State<PageLogin> {
                 textColor: Colors.white,
                 child: Text('Login'),
                 onPressed: (){
-                  check();
+                  setState(() {
+                    check();
+                  });
                 },
               ),
             ),
