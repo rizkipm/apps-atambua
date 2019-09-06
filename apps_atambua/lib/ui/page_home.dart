@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'dart:async';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'page_add_data_pegawai.dart';
+import 'package:apps_atambua/model/model_list_pegawai.dart';
+import 'package:http/http.dart' as http;
 
 class PageHome extends StatefulWidget {
 
@@ -15,6 +17,34 @@ class PageHome extends StatefulWidget {
 }
 
 class _PageHomeState extends State<PageHome> {
+
+
+  List<ModelListPegawai> listPegawai = [];
+
+  var loading = false;
+
+  //proses get data on background
+  Future<Null> getData() async{
+
+    setState(() {
+      loading = true; //ketika proses get data set loading nya true
+    });
+
+    final responseData = await http.get("http://172.20.10.6/apps_atambua/get_list_pegawai.php");
+    //cek status response
+    if(responseData.statusCode ==200){
+      final data = jsonDecode(responseData.body);
+      setState(() {
+        for (Map i in data){
+          //menambahkan data yang sudah berhasil di get ke list model
+          listPegawai.add(ModelListPegawai.fromJson(i));
+        }
+
+        //proses get data berhasil , loading di set false
+        loading = false;
+      });
+    }
+  }
 
   //tambahan method signout
   signOut() async{
@@ -40,6 +70,7 @@ class _PageHomeState extends State<PageHome> {
     // TODO: implement initState
     super.initState();
     getDataPref();
+    getData();
   }
 
 
@@ -62,6 +93,28 @@ class _PageHomeState extends State<PageHome> {
           )
         ],
       ),
+
+      body: Container(
+        child: loading ? Center(child: CircularProgressIndicator()) : ListView.builder(
+          itemCount: listPegawai.length,
+          itemBuilder: (context, index){
+            final nDataList = listPegawai[index];
+            return Card(
+              margin: EdgeInsets.all(5.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(nDataList.namaPegawai, style: TextStyle(fontWeight: FontWeight.bold,
+                      fontSize: 16.0, color: Colors.red
+                  ),),
+
+                  Text(nDataList.jabatan)
+                ],
+              ),
+            );
+          },
+        ),) ,
+
 
       floatingActionButton: FloatingActionButton(
         onPressed: (){
