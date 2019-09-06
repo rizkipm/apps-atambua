@@ -19,11 +19,24 @@ class _PageLoginState extends State<PageLogin> {
 //    });
 //  }
 
+  final _keyForm = GlobalKey<FormState>();
+
+  check() {
+    final form = _keyForm.currentState;
+    if (form.validate()) {
+      form.save();
+      //print("$username, $password");
+//      submitDataRegister();
+    }
+  }
+
+  String nUsername, nPassword;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        padding: EdgeInsets.only(top: 35.0),
+      body: Form(
+        key: _keyForm,
         child: Column(
           children: <Widget>[
             Text('Login Form', style: TextStyle(fontSize: 25.0, fontWeight: FontWeight.bold,
@@ -35,6 +48,13 @@ class _PageLoginState extends State<PageLogin> {
               padding: EdgeInsets.all(10),
               child: TextFormField(
                 controller: etUsername,
+                validator: (value){
+                  if(value.isEmpty){
+                    return 'Please input username';
+                  }
+                  return null;
+                },
+                onSaved: (value)=> nUsername = value ,
                 decoration: InputDecoration(
                   hintText: 'Username',
                   labelText: 'Input Username',
@@ -48,6 +68,13 @@ class _PageLoginState extends State<PageLogin> {
             Padding(
               padding: EdgeInsets.all(10),
               child: TextFormField(
+                validator: (value){
+                  if(value.isEmpty){
+                    return 'Please input Password';
+                  }
+                  return null;
+                },
+                onSaved: (value)=> nPassword = value ,
                 controller: etPassword,
                 obscureText: true,
                 decoration: InputDecoration(
@@ -68,7 +95,9 @@ class _PageLoginState extends State<PageLogin> {
                 color: Colors.blueGrey,
                 textColor: Colors.white,
                 child: Text('Login'),
-                onPressed: (){},
+                onPressed: (){
+                  check();
+                },
               ),
             ),
 
