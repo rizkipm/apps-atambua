@@ -204,7 +204,7 @@ class _PageLoginState extends State<PageLogin> {
         );
         break;
       case statusLogin.signIn :
-        return PageHome();
+        return PageHome(signOUt);
         break;
     }
 
