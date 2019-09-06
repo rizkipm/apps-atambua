@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'page_register.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'page_home.dart';
 
 class PageLogin extends StatefulWidget {
   @override
@@ -13,13 +14,6 @@ class _PageLoginState extends State<PageLogin> {
   TextEditingController etUsername = new TextEditingController();
   TextEditingController etPassword = new TextEditingController();
 
-//  String sex = "";
-//
-//  void _pilihSex(String value){
-//    setState(() {
-//      sex = value;
-//    });
-//  }
 
   final _keyForm = GlobalKey<FormState>();
 
@@ -49,7 +43,7 @@ class _PageLoginState extends State<PageLogin> {
     if(value == 1){
       setState(() {
         //berhasil login
-        Navigator.pop(context);
+       Navigator.push(context, MaterialPageRoute(builder: (context)=> PageHome()));
       });
     }else if(value == 2){
       print(pesan);
