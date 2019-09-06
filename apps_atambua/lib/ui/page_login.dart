@@ -53,6 +53,7 @@ class _PageLoginState extends State<PageLogin> {
     String dataHp = data['nohp'];
     String dataFullname = data['fullname'];
     String dataCreated_at = data['created_at'];
+    String dataIdUser = data['id_user'];
 
 
     //cek value 1 atau 0
@@ -63,7 +64,7 @@ class _PageLoginState extends State<PageLogin> {
       //set status login sebagai login
         _loginStatus = statusLogin.signIn;
         //simpan data login ke shared preferences
-        saveDataPref(value, dataUsername, dataEmail, dataAlamat, dataSex, dataHp,
+        saveDataPref(value, dataIdUser, dataUsername, dataEmail, dataAlamat, dataSex, dataHp,
             dataFullname, dataCreated_at);
       });
     }else if(value == 2){
@@ -73,12 +74,13 @@ class _PageLoginState extends State<PageLogin> {
     }
   }
 
-  saveDataPref(int value, String dUsername, dEmail, dAlamat, dSex, dHp, dFullName, dCreated) async{
+  saveDataPref(int value, String dIdUser, dUsername, dEmail, dAlamat, dSex, dHp, dFullName, dCreated) async{
 
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     setState(() {
       sharedPreferences.setInt("value", value);
       sharedPreferences.setString("username", dUsername);
+      sharedPreferences.setString("id_user", dIdUser);
       sharedPreferences.setString("email", dEmail);
       sharedPreferences.setString("alamat", dAlamat);
       sharedPreferences.setString("sex", dSex);
