@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'dart:async';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'page_add_data_pegawai.dart';
 
 class PageHome extends StatefulWidget {
 
@@ -65,6 +66,7 @@ class _PageHomeState extends State<PageHome> {
       floatingActionButton: FloatingActionButton(
         onPressed: (){
 
+          Navigator.push(context, MaterialPageRoute(builder: (context)=>PageAddPegawai()));
         },child: Icon(Icons.add),
         foregroundColor: Colors.white,
         backgroundColor: Colors.blueGrey,
